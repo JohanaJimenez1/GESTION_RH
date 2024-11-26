@@ -16,8 +16,15 @@ function afficherEmployes() {
 }
 
 function ajouterEmploye(id, nom, poste) {
+    // Verificar si los valores son válidos
+    if (!id || !nom || !poste) {
+        return false; // Fallo en la validación
+    }
+
     employes.push({ id, nom, poste });
+    return true; 
 }
+
 
 function supprimerEmploye(id) {
     const index = employes.findIndex(emp => emp.id === id);

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tests Unitaires - gestion employes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Résultats des Tests Unitaires :</h1>
+  <pre id="test-results"></pre>
+  <div id="liste-employes"></div>
+  <!-- Inclure le code de l'application -->
+  <script src="app.js"></script>
+
+  <script>
+    // Fonction pour afficher les résultats des tests
+    function assertEquals(actual, expected, testName) {
+      const results = document.getElementById('test-results');
+      if (actual === expected) {
+        results.textContent += `✔️ ${testName} : Réussi\n`;
+      } else {
+        results.textContent += `❌ ${testName} : Échoué\n   Attendu : ${expected}\n   Obtenu : ${actual}\n`;
+      }
+    }
+
+    // Test pour ajouter un employé
+    function testAjouterEmploye() {
+
+      // Cas 1: Ajouter un employé valide
+      let result = ajouterEmploye(4, 'Alice', 'Développeur');
+      assertEquals(result, true, 'Test 1: Ajouter un employé valide');
+
+      afficherEmployes(); // Actualizar el DOM
+      const listeEmployes = document.getElementById('liste-employes');
+      const lastEmploye = listeEmployes.lastElementChild;
+
+      result = ajouterEmploye('', '', '');
+      assertEquals(result, false, 'Test 2: Ajouter un employé avec des champs vides');
+      afficherEmployes();
+    }
+
+
+  function testSupprimerEmploye() {
+  const results = document.getElementById('test-results');
+
+
+  ajouterEmploye(5, 'Jean', 'Développeur');
+  afficherEmployes();
+
+  const listeEmployes = document.getElementById('liste-employes');
+  const initialCount = listeEmployes.childElementCount;
+
+  
+  supprimerEmploye(5);
+  afficherEmployes();
+  const countAfterDeletion = listeEmployes.childElementCount;
+
+
+  assertEquals(countAfterDeletion, initialCount - 1, 'Test 2: Supprimer un employé existant');
+
+  // pas exist DOM
+  const employeDiv = document.querySelector('[data-id="5"]');
+  assertEquals(employeDiv, null, 'Test 3: Vérifier que l\'employé supprimé n\'est plus présent');
+
+}
+
+
+
+    // Exécution des tests
+    function runTests() {
+      testAjouterEmploye();
+      testSupprimerEmploye();
+    }
+
+    runTests();
+  </script>
+</body>
+</html>
